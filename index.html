@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Traceable Anonymous Credential</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/kickstart.css" media="all" />
+    <!-- KICKSTART -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+    <!-- CUSTOM STYLES -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/kickstart.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+    <!-- KICKSTART -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <!-- ===================================== END HEADER ===================================== -->
+    <nav class="navbar">
+        <a class="hide-phone" id="logo" href=""><i class="fa fa-angle-right"></i> Team<span></span></a>
+        <ul>
+            <li><a href="">Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="callout callout-top clearfix">
+        <div class="grid">
+            <h1>Traceable Anonymous Credential </h1>
+			<!-- Based on Privacy-Preserving Smart Contract -->
+            <h4>A privacy-focused blind credential powered <br> by privacy-preserving smart contract </h4>
+            <br>
+            <div class="col_3">
+                <i class="fas fa-user-secret fa-3x"></i> 
+				<br>
+                <br/> Privacy Preserving
+            </div>
+
+            <div class="col_3">
+                <i class="fas fa-dice-d20 fa-3x"></i>
+				<br>
+                <br/> Anonymity Traceable 
+            </div>
+
+            <div class="col_3">
+                <i class="fa fa-users fa-3x"></i>
+				<br>
+                <br/> User Friendly
+            </div>
+
+            <div class="col_3 omega">
+                <i class="fas fa-tachometer-alt fa-3x"></i>
+				<br>
+                <br/><a title = "show the performance test results" style="cursor:pointer; color: #fff" onclick="javascript:window.location.href='https://github.com/auditable-credential/auditable-credential-core/tree/master/test/result'"> High efficiency </a>
+            </div>
+            <div class="clear"></div>
+            <br />
+            <a class="button red large" href="https://github.com/auditable-credential/auditable-credential-core#workflow"><i class="fab fa-whmcs"></i> How it works </a>
+            <span style="white-space: nowrap;">
+		<a class="button blue large" href="" ><i class="fa fa-newspaper"> Paper</i></a>
+		<a class="button blue large" href="mailto:"><i class="fa fa-envelope"></i> Email</a></span>
+            <br />
+        </div>
+    </div>
+
+    </br>
+    </br>
+    
+    
+	
+	
+
+    <div class="grid">
+
+        <!-- ===================================== 
+	INSTRUCTIONS 
+===================================== -->
+        <!--<h3>Implementation</h3> 
+		
+	
+		
+		<div class="col_12">
+				
+				Traceable anonymous credential allows to issue a credential blindly and reveal this blindness in a force-auditable manner with the aid of transparent transaction invoking records.
+	Two Implementations are provided based on different underlying groups: the additive group of elliptic curves and the multiplicative group of integers (mod N).
+		       
+		</div>
+		
+		-->
+
+		</br>
+        <ul class="tabs">
+            <li><a href="#instructions">Implementation: Version I</a></li>
+        </ul>
+
+        <div id="instructions" class="tab-content">
+
+            <div class="col_12">
+
+                <h4><i class="fa fa-lock"></i> Additive group of Elliptic curves </h4> 
+				Elliptic-curve cryptography (ECC) is an approach to public-key cryptography based on 
+				the algebraic structure of elliptic curves over finite fields. 
+				ECC requires smaller keys compared to non-EC cryptography (based on plain Galois fields) 
+				to provide equivalent security. Part of the core code in the smart contract is implemented as follows:
+            </div>
+
+            <div class="col_8">
+                <br>
+                <pre>
+function identity_calculating(uint256 zeta1_x, uint256 zeta1_y) public{
+	if (IdentityTraceTimes[msg.sender] == 0){
+		uint256 nxt = inverseMod(xt, n);
+		(i_x,i_y) = multiplyScalar(zeta1_x, zeta1_y, nxt);	
+	}
+	identity_tracing_log(zeta1_x);
+}
+</pre>
+
+            </div>
+
+            <div class="col_4">
+                <br>
+                <ul class="alt">
+                    <li>
+                        <button class="medium green" onclick="javascript:window.location.href='#'"><i class="fa fa-play-circle" ></i> Prototype &nbsp; </button>
+                        <button class="medium green" onclick="javascript:window.location.href='https://github.com/auditable-credential/auditable-credential-core'"><i class="fab fa-github"></i> Github &nbsp; </button>
+                    </li>
+                    <li>
+                        <button class="medium blue" onclick="javascript:window.location.href='https://auditable-credential.github.io/auditable-credential-documentation'" ><i class="fa fa-star"></i> Interactive Tutorial & Demo </button>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <ul class="tabs">
+            <li><a href="#btn-example">Implementation: Version II</a></li>
+        </ul>
+
+        <div id="btn-example" class="tab-content">
+            <div class="col_12">
+                <h4><i class="fas fa-shield-alt"></i> Multiplicative group of integers (mod N)</h4> 
+				 A modulo multiplication group is a finite group G<sub>n</sub> of residue classes prime to n under multiplication mod n.
+                 G<sub>n</sub> is abelian of group order &#934;(n), where &#934;(n) is the totient function. Part of the core code in the smart contract is implemented as follows:				
+            </div>
+
+            <div class="col_8">
+                <pre>
+function identity_calculating(uint zeta1) public{
+	if (IdentityTraceTimes[msg.sender] == 0){
+		uint nxt = quick_power(xt, q - 2, q);
+		IdentityTraceResults[msg.sender] = quick_power(zeta1, nxt, p);
+	}
+	IdentityTraceTimes[msg.sender] += 1;
+	identity_tracing_log(zeta1);
+}
+</pre>
+
+            </div>
+
+             <div class="col_4">
+                <br>
+                <ul class="alt">
+                    <li>
+                        <button class="medium green" onclick="javascript:window.location.href='#'"><i class="fa fa-play-circle" ></i> Prototype &nbsp;</button>
+                        <button class="medium green" onclick="javascript:window.location.href='https://github.com/auditable-credential/auditable-credential-core'"><i class="fab fa-github"></i> Github &nbsp;</button>
+                    </li>
+                    <li>
+                        <button class="medium blue" onclick="javascript:window.location.href='https://auditable-credential.github.io/auditable-credential-documentation'" ><i class="fa fa-star"></i> Interactive Tutorial & Demo</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+		
+
+    </div>
+	
+	
+    <!--END GRID WRAP-->
+	
+	<div class="callout">
+	<div class="grid">
+		<div id="list-example" class="clearfix">
+				<div class="col_4">
+                 <h4><i class="fas fa-stream"></i> Evaluation (Performance)</h4>
+                </div>
+				<div class="col_8"></div>
+				
+				<div class="col_12">
+				<table cellspacing="0" cellpadding="0">
+				<thead><tr>
+					<th>Version/Operation(Second)</th>
+					<th>Parameter preparation</th>
+					<th>Credential issuing</th>
+					<th>Credential verifying</th>
+					<th>Identity tracing</th>
+					<th>Credential tracing</th>
+					
+				</tr></thead>
+				<tbody><tr>
+					<td>Elliptic Curves 192</td>
+					<td>0.00052</td>
+					<td>0.00454</td>
+					<th>0.00141</th>
+					<th>0.00391</th>
+					<th>0.00216</th>				
+				</tr><tr>
+					<td>Elliptic Curves 256</td>
+					<td>0.00084</td>
+					<td>0.00740</td>
+					<th>0.00232</th>
+					<th>0.00455</th>
+					<th>0.00306</th>			
+				</tr><tr>
+					<td>Integers Group 256</td>
+					<td>0.02839</td>
+					<td>0.000245</td>
+					<th>0.00008</th>
+					<th>0.00041</th>
+					<th>0.00038</th>			
+				</tr><tr>
+					<td>Integers Group 1024</td>
+					<td>2.28698</td>
+					<td>0.006368</td>
+					<th>0.00296</th>
+					<th>&times;</th>
+					<th>&times;</th>	
+				</tr></tbody>
+				</table>
+				<p>
+				
+				</p>
+				
+				</div>
+				
+		</div>
+		</div>		
+	</div>
+
+    <!-- ===================================== START FOOTER ===================================== -->
+    <div class="clear"></div>
+    <div id="footer">
+        &copy; Copyright 2019 All Rights Reserved by <a> Anonymous Team </a>. This website was built with
+        <a href="http://www.99lime.com">KickStart</a>
+    </div>
+
+</body>
+
+</html>
